@@ -264,6 +264,31 @@ Bundle        →  vite-plugin-singlefile (single HTML output)
 
 ---
 
+## 🚀 Deploying to Vercel (e.g. driving-theta.vercel.app)
+
+This app is a client-side SPA. Two settings are required for Google sign-in in production:
+
+### 1 — Vercel SPA routing (`vercel.json`)
+
+Without rewrites, `/auth/callback` returns **404 NOT_FOUND** on Vercel. The repo includes `vercel.json` so all routes serve `index.html`.
+
+### 2 — Supabase URL Configuration
+
+In **Supabase Dashboard → Authentication → URL Configuration**:
+
+| Setting | Production value |
+|---|---|
+| **Site URL** | `https://driving-theta.vercel.app` (not `http://localhost:5173`) |
+| **Redirect URLs** | `https://driving-theta.vercel.app/auth/callback` |
+| | `https://driving-theta.vercel.app/reset-password` |
+| | `http://localhost:5173/auth/callback` (for local dev) |
+
+If **Site URL** is still localhost, Google OAuth completes but Supabase sends users to `localhost` with the token — replacing the host in the URL works because the token is valid but the redirect target is wrong.
+
+Optional on Vercel: set `VITE_APP_URL=https://driving-theta.vercel.app` in project environment variables, then redeploy.
+
+---
+
 ## 💡 Pro Tips
 
 1. **RLS সবার আগে:** নতুন table বানালেই RLS policy লিখুন — পরে মনে থাকে না।
