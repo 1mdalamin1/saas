@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #F5F0E6;
+  --forest: #1B3B2F;
+  --ember: #E8651C;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #F5F0E6;
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: 'Manrope', sans-serif;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 5px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(27, 59, 47, 0.3);
+  border-radius: 10px;
+}
+
