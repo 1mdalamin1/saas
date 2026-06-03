@@ -11,6 +11,7 @@ const moduleTitle: Record<ActiveModule, string> = {
   progress: 'Progress Tracker',
   payments: 'Payments',
   resources: 'Resource Library',
+  'import-export': 'Import/Export',
   profile: 'Profile',
 };
 
@@ -23,6 +24,7 @@ function pathToModule(pathname: string): ActiveModule {
     'progress',
     'payments',
     'resources',
+    'import-export',
     'profile',
   ];
   return valid.includes(segment as ActiveModule) ? (segment as ActiveModule) : 'dashboard';

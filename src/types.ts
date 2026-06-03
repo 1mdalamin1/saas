@@ -63,4 +63,5 @@ export type ActiveModule =
   | 'progress'
   | 'payments'
   | 'resources'
+  | 'import-export'
   | 'profile';
