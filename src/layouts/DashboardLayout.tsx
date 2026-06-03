@@ -8,6 +8,7 @@ import StudentsView from '../components/StudentsView';
 import ProgressView from '../components/ProgressView';
 import PaymentsView from '../components/PaymentsView';
 import ResourcesView from '../components/ResourcesView';
+import ImportExportView from '../components/ImportExportView';
 import ProfilePage from '../pages/ProfilePage';
 
 interface DashboardLayoutProps {
@@ -36,6 +37,7 @@ export default function DashboardLayout({ module }: DashboardLayoutProps) {
     'progress',
     'payments',
     'resources',
+    'import-export',
     'profile',
   ];
 
@@ -54,6 +56,10 @@ export default function DashboardLayout({ module }: DashboardLayoutProps) {
   const setActive = (m: ActiveModule) => navigate(`/${m}`);
 
   if (module === 'profile') return <ProfilePage />;
+
+  if (module === 'import-export') {
+    return <ImportExportView onDataChanged={data.reload} />;
+  }
 
   if (data.loading) return <LoadingState />;
 
