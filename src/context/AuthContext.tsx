@@ -8,7 +8,7 @@ import {
   type ReactNode,
 } from 'react';
 import type { Session, User } from '@supabase/supabase-js';
-import { getAuthCallbackUrl } from '../lib/authRedirect';
+import { getAuthCallbackUrl, getPasswordResetRedirectUrl } from '../lib/authRedirect';
 import { isSupabaseConfigured, supabase } from '../lib/supabase';
 import { PROFILE_BUCKET } from '../lib/storage';
 import type { ProfileUpdate, UserProfile } from '../types/profile';
@@ -27,6 +27,7 @@ interface AuthContextValue {
     password: string,
   ) => Promise<{ error: string | null }>;
   signInWithGoogle: (redirectPath?: string) => Promise<{ error: string | null }>;
+  resetPassword: (email: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
   updateProfile: (updates: ProfileUpdate) => Promise<{ error: string | null }>;
@@ -202,6 +203,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: error?.message ?? null };
   }, []);
 
+  const resetPassword = useCallback(async (email: string) => {
+    if (!isSupabaseConfigured) {
+      return { error: 'Supabase is not configured. Add keys to .env.local.' };
+    }
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: getPasswordResetRedirectUrl(),
+    });
+    return { error: error?.message ?? null };
+  }, []);
+
   const signOut = useCallback(async () => {
     await supabase.auth.signOut();
     setProfile(null);
@@ -262,6 +273,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signIn,
       signUp,
       signInWithGoogle,
+      resetPassword,
       signOut,
       refreshProfile,
       updateProfile,
@@ -277,6 +289,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signIn,
       signUp,
       signInWithGoogle,
+      resetPassword,
       signOut,
       refreshProfile,
       updateProfile,
